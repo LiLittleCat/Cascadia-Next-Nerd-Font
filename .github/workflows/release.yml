@@ -1,0 +1,46 @@
+name: Update Homebrew Tap
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  update-tap:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download release assets and update tap
+        env:
+          TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+          TAG: ${{ github.event.release.tag_name }}
+          TAP_REPO: LiLittleCat/homebrew-tap
+          FONT_REPO: LiLittleCat/Cascadia-Next-Nerd-Font
+        run: |
+          VERSION="${TAG#v}"
+          git clone "https://x-access-token:${TAP_GITHUB_TOKEN}@github.com/${TAP_REPO}.git" tap_repo
+
+          for VARIANT in SC TC JP; do
+            LOWER=$(echo "$VARIANT" | tr '[:upper:]' '[:lower:]')
+            ASSET="CascadiaNext${VARIANT}NF-ttf.zip"
+            URL="https://github.com/${FONT_REPO}/releases/download/${TAG}/${ASSET}"
+
+            echo "Downloading $URL"
+            curl -fsSL "$URL" -o "$ASSET"
+
+            SHA256=$(sha256sum "$ASSET" | awk '{print $1}')
+            CASK="tap_repo/Casks/font-cascadia-next-${LOWER}-nerd-font.rb"
+
+            sed -i "s/version \".*\"/version \"${VERSION}\"/" "$CASK"
+            sed -i "s/sha256 \".*\"/sha256 \"${SHA256}\"/" "$CASK"
+            echo "Updated $CASK: version=${VERSION} sha256=${SHA256}"
+          done
+
+          cd tap_repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/
+          git diff --cached --quiet || git commit -m "chore: bump to ${TAG}"
+          git push
