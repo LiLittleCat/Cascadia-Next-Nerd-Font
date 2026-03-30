@@ -1,0 +1,67 @@
+name: Build Fonts
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.0.0)'
+        required: true
+        type: string
+      nerd_fonts_version:
+        description: 'Nerd Fonts version for font-patcher (e.g. v3.3.0), leave empty for latest'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install FontForge
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fontforge python3-fontforge
+
+      - name: Install Python dependencies
+        run: pip install fonttools
+
+      - name: Download Nerd Fonts patcher
+        run: |
+          if [ -n "${{ inputs.nerd_fonts_version }}" ]; then
+            URL="https://github.com/ryanoasis/nerd-fonts/releases/download/${{ inputs.nerd_fonts_version }}/FontPatcher.zip"
+          else
+            URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FontPatcher.zip"
+          fi
+          curl -fsSL "$URL" -o FontPatcher.zip
+          unzip FontPatcher.zip -d FontPatcher
+
+      - name: Build fonts
+        run: |
+          FFPYTHON=$(which ffpython 2>/dev/null || which ffpython3 2>/dev/null || echo python3)
+          echo "Using ffpython: $FFPYTHON"
+          python3 script/build.py \
+            --ffpython "$FFPYTHON" \
+            --font-patcher FontPatcher/font-patcher
+
+      - name: Collect release assets
+        run: |
+          mkdir -p release_assets
+          find dist -name "*.zip" -o -name "*.tar.gz" | sort | xargs -I{} cp {} release_assets/
+          echo "Assets to release:"
+          ls -lh release_assets/
+
+      - name: Create draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag }}
+          name: ${{ inputs.tag }}
+          draft: true
+          generate_release_notes: true
+          files: release_assets/*
