@@ -8,10 +8,10 @@ on:
         required: true
         type: string
       nerd_fonts_version:
-        description: 'Nerd Fonts version for font-patcher (e.g. v3.3.0), leave empty for latest'
+        description: 'Nerd Fonts version for font-patcher (e.g. v3.4.0), leave empty for latest'
         required: false
         type: string
-        default: ''
+        default: 'v3.4.0'
 
 permissions:
   contents: write
