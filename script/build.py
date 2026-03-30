@@ -235,17 +235,20 @@ def build_ttc(ttf_files: List[Path], ttc_path: Path) -> None:
 
 def create_zip(source_dir: Path, zip_path: Path) -> None:
     zip_path.parent.mkdir(parents=True, exist_ok=True)
+    folder_name = zip_path.stem
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for path in sorted(source_dir.rglob("*")):
             if path.is_file():
-                zf.write(path, arcname=path.relative_to(source_dir))
+                zf.write(path, arcname=Path(folder_name) / path.relative_to(source_dir))
 
 
 def create_tar_gz(source_dir: Path, tar_gz_path: Path) -> None:
     tar_gz_path.parent.mkdir(parents=True, exist_ok=True)
+    name = tar_gz_path.name
+    folder_name = name[:-len(".tar.gz")] if name.endswith(".tar.gz") else tar_gz_path.stem
     with tarfile.open(tar_gz_path, "w:gz") as tf:
         for path in sorted(source_dir.rglob("*")):
-            tf.add(path, arcname=path.relative_to(source_dir))
+            tf.add(path, arcname=str(Path(folder_name) / path.relative_to(source_dir)))
 
 
 def clean_dir(path: Path) -> None:
