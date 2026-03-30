@@ -89,6 +89,31 @@ family = "Cascadia Next SC NF"
 
 ---
 
+## 卸载
+
+**macOS（Homebrew）**
+```bash
+brew uninstall --cask font-cascadia-next-sc-nerd-font
+brew uninstall --cask font-cascadia-next-tc-nerd-font
+brew uninstall --cask font-cascadia-next-jp-nerd-font
+
+brew untap LiLittleCat/tap
+```
+
+**macOS（手动）**
+```bash
+rm ~/Library/Fonts/CascadiaNext*NF-*.ttf
+```
+
+**Linux**
+```bash
+rm ~/.local/share/fonts/CascadiaNext*NF-*.ttf && fc-cache -fv
+```
+
+**Windows**：控制面板 → 字体 → 右键对应字体 → 删除
+
+---
+
 ## 自行构建
 
 ### 前置依赖

@@ -87,6 +87,31 @@ family = "Cascadia Next JP NF"
 
 ---
 
+## アンインストール
+
+**macOS（Homebrew）**
+```bash
+brew uninstall --cask font-cascadia-next-sc-nerd-font
+brew uninstall --cask font-cascadia-next-tc-nerd-font
+brew uninstall --cask font-cascadia-next-jp-nerd-font
+
+brew untap LiLittleCat/tap
+```
+
+**macOS（手動）**
+```bash
+rm ~/Library/Fonts/CascadiaNext*NF-*.ttf
+```
+
+**Linux**
+```bash
+rm ~/.local/share/fonts/CascadiaNext*NF-*.ttf && fc-cache -fv
+```
+
+**Windows**：コントロールパネル → フォント → 対象フォントを右クリック → 削除
+
+---
+
 ## ビルド方法
 
 ### 必要な環境
