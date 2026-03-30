@@ -1,0 +1,29 @@
+# original font
+# original/
+
+# FontPatcher
+FontPatcher/
+
+# build
+dist/
+.build_temp/
+release/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# system
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
