@@ -36,9 +36,12 @@
 ```bash
 brew tap LiLittleCat/tap
 
-brew install --cask font-cascadia-next-sc-nerd-font  # 簡体字中国語
-brew install --cask font-cascadia-next-tc-nerd-font  # 繁体字中国語
-brew install --cask font-cascadia-next-jp-nerd-font  # 日本語
+# 簡体字中国語
+brew install --cask font-cascadia-next-sc-nerd-font
+# 繁体字中国語
+brew install --cask font-cascadia-next-tc-nerd-font
+# 日本語
+brew install --cask font-cascadia-next-jp-nerd-font
 ```
 
 **macOS（手動）**
