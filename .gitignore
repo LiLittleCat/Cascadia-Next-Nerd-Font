@@ -4,6 +4,9 @@
 # FontPatcher
 FontPatcher/
 
+# Homebrew tap (separate repo)
+homebrew-tap/
+
 # build
 dist/
 .build_temp/
