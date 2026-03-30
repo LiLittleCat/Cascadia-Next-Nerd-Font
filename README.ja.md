@@ -32,7 +32,16 @@
 
 `.tar.gz` 形式も同名で提供しています。
 
-**macOS**
+**macOS（推奨：Homebrew）**
+```bash
+brew tap LiLittleCat/tap
+
+brew install --cask font-cascadia-next-sc-nerd-font  # 簡体字中国語
+brew install --cask font-cascadia-next-tc-nerd-font  # 繁体字中国語
+brew install --cask font-cascadia-next-jp-nerd-font  # 日本語
+```
+
+**macOS（手動）**
 ```bash
 cp *.ttf ~/Library/Fonts/
 ```

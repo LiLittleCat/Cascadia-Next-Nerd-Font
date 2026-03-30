@@ -32,7 +32,16 @@ Go to the [Releases](https://github.com/LiLittleCat/Cascadia-Next-Nerd-Font/rele
 
 `.tar.gz` archives are also available with matching filenames.
 
-**macOS**
+**macOS (recommended: Homebrew)**
+```bash
+brew tap LiLittleCat/tap
+
+brew install --cask font-cascadia-next-sc-nerd-font  # Simplified Chinese
+brew install --cask font-cascadia-next-tc-nerd-font  # Traditional Chinese
+brew install --cask font-cascadia-next-jp-nerd-font  # Japanese
+```
+
+**macOS (manual)**
 ```bash
 cp *.ttf ~/Library/Fonts/
 ```

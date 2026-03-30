@@ -34,7 +34,16 @@
 
 解压后按系统安装：
 
-**macOS**
+**macOS（推荐：Homebrew）**
+```bash
+brew tap LiLittleCat/tap
+
+brew install --cask font-cascadia-next-sc-nerd-font  # SC 简中
+brew install --cask font-cascadia-next-tc-nerd-font  # TC 繁中
+brew install --cask font-cascadia-next-jp-nerd-font  # JP 日文
+```
+
+**macOS（手动）**
 ```bash
 cp *.ttf ~/Library/Fonts/
 ```
