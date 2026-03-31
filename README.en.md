@@ -5,7 +5,7 @@
 [Cascadia Next](https://github.com/microsoft/cascadia-code/releases/tag/cascadia-next) patched with the full [Nerd Fonts](https://www.nerdfonts.com/) icon set. Supports Simplified Chinese (SC), Traditional Chinese (TC), and Japanese (JP) variants.
 
 ## Preview
-![Preview](showcase/preview.png)
+![Preview](showcase/powershell.png)
 
 ## Variants
 

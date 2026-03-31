@@ -5,7 +5,7 @@
 [Cascadia Next](https://github.com/microsoft/cascadia-code/releases/tag/cascadia-next) に完全な [Nerd Fonts](https://www.nerdfonts.com/) アイコンセットをパッチしたフォント。簡体字中国語（SC）・繁体字中国語（TC）・日本語（JP）の3バリアントに対応しています。
 
 ## プレビュー
-![プレビュー](showcase/preview.png)
+![プレビュー](showcase/powershell.png)
 
 ## バリアント
 

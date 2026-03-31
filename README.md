@@ -5,7 +5,7 @@
 为 [Cascadia Next](https://github.com/microsoft/cascadia-code/releases/tag/cascadia-next) 字体打上完整 [Nerd Fonts](https://www.nerdfonts.com/) 补丁，同时支持简中（SC）、繁中（TC）、日文（JP）三个中日文变体。
 
 ## 预览
-![预览](showcase/preview.png)
+![预览](showcase/powershell.png)
 
 
 
