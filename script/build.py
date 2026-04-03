@@ -213,6 +213,44 @@ def set_font_names(font_path: Path, final_family: str, style_name: str, output_p
         _set_name_record(font, 16, final_family, 1, 0, lang_id)
         _set_name_record(font, 17, style_name, 1, 0, lang_id)
 
+    # Fix xAvgCharWidth: should equal the half-width (Latin) advance, not the
+    # CJK-skewed average that the patcher leaves behind.
+    upm = font["head"].unitsPerEm
+    half_width = upm // 2
+    font["OS/2"].xAvgCharWidth = half_width
+
+    # Clamp glyph advance widths for strict monospace compliance.
+    # JetBrains/Warp enforce advanceWidthMax <= UPM and reject fonts
+    # with any 1-unit deviations from exact UPM.
+    hmtx = font["hmtx"].metrics
+    for glyph_name in list(hmtx.keys()):
+        aw, lsb = hmtx[glyph_name]
+        if 0 < aw < half_width:
+            # narrow glyphs (combining marks, diacritics) -- leave untouched
+            pass
+        elif aw > half_width:
+            # Anything at or near full-width should be exactly UPM.
+            # font-patcher often produces 2046/2047/2049 instead of 2048.
+            hmtx[glyph_name] = (upm, lsb)
+    font["hhea"].advanceWidthMax = upm
+
+    # Fix fsSelection: bit5 (Bold) and bit6 (Regular) must be mutually exclusive.
+    # font-patcher commonly sets both bits, which breaks monospace detection.
+    fs = font["OS/2"].fsSelection
+    style_lower = style_name.lower().replace(" ", "")
+    if "bold" in style_lower and "extrabold" not in style_lower and "semibold" not in style_lower:
+        # Bold variant: set bit5, clear bit6
+        fs |= (1 << 5)
+        fs &= ~(1 << 6)
+    elif style_lower == "regular":
+        # Regular: set bit6, clear bit5
+        fs |= (1 << 6)
+        fs &= ~(1 << 5)
+    else:
+        # All others: clear both bit5 and bit6
+        fs &= ~((1 << 5) | (1 << 6))
+    font["OS/2"].fsSelection = fs
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
     font.save(str(output_path))
     font.close()
