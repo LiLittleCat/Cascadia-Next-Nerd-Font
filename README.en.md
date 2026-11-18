@@ -34,6 +34,7 @@ Go to the [Releases](https://github.com/LiLittleCat/Cascadia-Next-Nerd-Font/rele
 
 **macOS (recommended: Homebrew)**
 ```bash
+brew trust --tap LiLittleCat/tap
 brew tap LiLittleCat/tap
 
 # Simplified Chinese

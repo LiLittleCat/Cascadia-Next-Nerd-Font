@@ -36,6 +36,7 @@
 
 **macOS（推薦：Homebrew）**
 ```bash
+brew trust --tap LiLittleCat/tap
 brew tap LiLittleCat/tap
 
 # 簡體中文
